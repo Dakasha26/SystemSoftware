@@ -1,12 +1,21 @@
+.PHONY: clean
 
-program: program.o fibonacci.o
-		gcc -o program program.o fibonacci.o
+OBJS = fibonacci.o program.o
+CFLAGS = -g3
+
+program: $(OBJS)
+		gcc $(CFLAGS) -o program $(OBJS)
 
 program.o: program.c fibonacci.h
-		gcc -c -o program.o program.c
+		gcc $(CFLAGS) -c -o program.o program.c
 
 fibonacci.o: fibonacci.o fibonacci.h
-		gcc -c -o fibonacci.o fibonacci.c
+		gcc $(CFLAGS) -c -o fibonacci.o fibonacci.c
 
 
-clean: rm
+clean:
+		rm -f fibonacci *.o *~ *.a
+
+asm:
+		gcc -c -S -o fibonacci.s fibonacci.c
+		gcc -c -s -o program.s program.c
